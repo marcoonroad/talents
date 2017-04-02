@@ -7,8 +7,8 @@ env:
 install:
   - sudo apt-get install luajit
   - sudo apt-get install luarocks
-  - sudo apt-get install LuaFileSystem
-  - sudo apt-get install busted
+  - sudo luarocks install LuaFileSystem
+  - sudo luarocks install busted
 
 script: "busted"
 
