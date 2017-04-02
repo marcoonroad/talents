@@ -1,5 +1,5 @@
 local talents = require 'talents'
-local example = require 'example' (talents)
+local example = require 'talents.example' (talents)
 
 describe ("talent inheritance with syntax sugar,", function ( )
         local plane = talents.talent {

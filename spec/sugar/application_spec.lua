@@ -1,6 +1,6 @@
 local talents = require 'talents'
 local reason  = require 'talents.internals.reason'
-local example = require 'example' (talents)
+local example = require 'talents.example' (talents)
 
 describe ("talent application with syntax sugar,", function ( )
         it ("should decorate given object", function ( )

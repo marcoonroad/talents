@@ -1,7 +1,7 @@
 local talents = require 'talents'
 local weak    = require 'talents.internals.weak'
 local reason  = require 'talents.internals.reason'
-local example = require 'example' (talents)
+local example = require 'talents.example' (talents)
 
 describe ("talent composition with syntax sugar,", function ( )
         it ("should merge both talents", function ( )

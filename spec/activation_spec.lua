@@ -1,6 +1,6 @@
 local talents = require 'talents'
 local reason  = require 'talents.internals.reason'
-local example = require 'example' (talents)
+local example = require 'talents.example' (talents)
 
 describe ("talent contextual activation,", function ( )
         it ("should provide a scoped application", function ( )
