@@ -18,7 +18,7 @@ local function eval (program, environment, ...)
         assert (major == "5", "Only works on some Lua 5 versions!")
 
         if minor == "1" then
-                local chunk = assert (load (program))
+                local chunk = assert (loadstring (program))
 
                 setfenv (chunk, environment)
 
