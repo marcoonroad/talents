@@ -1,0 +1,22 @@
+language: erlang
+
+env:
+  - LUA=""
+  - LUA="luajit"
+
+install:
+  - sudo apt-get install luajit
+  - sudo apt-get install luarocks
+  - sudo apt-get install luafilesystem
+  - sudo apt-get install busted
+
+script: "busted"
+
+branches:
+  except:
+    - gh-pages
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
