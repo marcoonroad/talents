@@ -4,7 +4,7 @@ Pluggable contextual talents implementation for Lua.
 [![Build Status](https://travis-ci.org/marcoonroad/talents.svg?branch=master)](https://travis-ci.org/marcoonroad/talents)
 
 This library provides talents, a kind of traits/mixins/roles applied on object-level. However, the set of operators
-known in these four features are somehow _very restricted_ in this library. To be honest, this library only
+known in these four features is somehow _very restricted_ in this library. To be honest, this library only
 supports the following operators:
 + Symmetric sum (a.k.a conflict-aware merge operator) of talents, and;
 + Inheritance/inclusion of talents (with potentially replaced definitions).
@@ -103,7 +103,7 @@ or mixins, you may think that it is a bit strange, because frequently the invers
 of our talents) are __overridden__ by the target classes (the counterparts of our objects). But there is a good reason for
 that, we just want to __individually extend__ concrete things. Applied talents are still isolated from their result objects,
 so any effects (I mean, mutation) performed on the result are not reflected on the talent (neither on the target object).
-That said, let us skip to an really important note.
+That said, let us skip to a really important note.
 
 
 ---
@@ -161,7 +161,7 @@ hand during the refactoring process. Nevertheless, it is possible to use it in t
 as well (giving rise to much reuse and maintainability). This composition operator doesn't work only on behaviors,
 but also for states. In the case, states are seen as "default" values (it's not possible to mutate the talent itself
 'cause it is abstract and we must protect that against unwanted or accidental changes). Composition, so, takes two
-talents and merges their definitions, possibly with conflicts.
+talents and merges their associated definitions, possibly with conflicts.
 
 For a better view of composition, the following table can help you to understand that (notice that row and column
 headers are the elements being symmetrically composed, the cell between such rows and columns is the result of
