@@ -4,7 +4,7 @@ Pluggable contextual talents implementation for Lua.
 [![Build Status](https://travis-ci.org/marcoonroad/talents.svg?branch=master)](https://travis-ci.org/marcoonroad/talents)
 
 This library provides talents, a kind of traits/mixins/roles applied on object-level. However, the set of operators
-known in these three features are somehow _very restricted_ in this library. To be honest, this library only
+known in these four features are somehow _very restricted_ in this library. To be honest, this library only
 supports the following operators:
 + Symmetric sum (a.k.a conflict-aware merge operator) of talents, and;
 + Inheritance/inclusion of talents (with potentially replaced definitions).
@@ -16,7 +16,7 @@ I have not implemented aliasing and exclusion, due the following reasons:
   internal self-sends, which is an expensive operation (but possible in Lua in some sense, through
   source introspection of functions, string patterns, dynamic loading of code and debug facilities
   on environments and up-values -- also known as closure variables -- but, all of these things will
-  lead to a different method being assigned, which can also yield unexpected issues on the freely
+  lead to a different method being assigned, which can also yield unexpected issues through the freely
   available Lua's identity discrimination capabilities).
 
 Instead, it is highly desirable and recommended to use different talent applications for the same object,
@@ -70,8 +70,8 @@ local talent = talents.talent (definitions)
 Where `definitions` will be often a table that we will call `pairs` on it (but Lua gives you the capability to
 overload any value for this iterator). Once the iteration is performed, a fresh talent is generated and it
 _isn't directly synchronized anymore with the passed definitions_, that is, changes performed on the passed
-definitions won't be _propagated on_ neither _observed by_ the generated talent due the shallow cloning used
-internally to yield that talent. Note that indirect mutations, for example, on the reference for some definition,
+definitions won't be _propagated on_ neither _observed by_ the generated talent (due the shallow cloning used
+internally to yield that talent). Note that indirect mutations, for example, on the reference for some definition,
 may yet be observed/propagated. You can plug a different iterator generating a pair of a `selector` and a `value`,
 where `value` is a deeply cloned reference, though.
 
@@ -124,8 +124,8 @@ will type-check against the Dynamic type):
 
 ```lua
 local point2D = talents.talent {
-    x = talents.require ( ),
-    y = talents.require ( ),
+    x = talents.required ( ),
+    y = talents.required ( ),
 
     move = function (self, x, y)
         self.x = self.x + x
@@ -260,7 +260,7 @@ It's also possible to extend existent talents and thus, reuse some definitions, 
 * If you are willing to define a requirement, but it is already provided on the parent talent, this requirement is discarded
   anyways by the child talent.
 * It is possible to "solve" conflicts through "overriding". If you provide some definition, and in the parent talent it is
-  actually a conflict, the conflict is ignored and the child talent takes that definition. Note that conflicts are unforgeable
+  actually a conflict, the conflict is ignored and the child talent takes that definition. Note that conflicts are unaccessible
   values (different of requirements), so they only arise on some certain specific conditions of symmetrical sums. If this conflict
   is due two different primitive values of the same type (e.g, numbers such 0 and 1), it's not quite bad to override such conflict,
   but if it is due _two different and unrelated functions/methods accidentally sharing the same selector field_, codes relying
@@ -275,6 +275,10 @@ Despite such "issues" and "problems" of inheritance, to use inheritance between 
 local child = talents.extend (parent, definitions)
 ```
 
+Talent inheritance also works internally in the same way of talent definition: the passed definitions are cloned through an iteration
+(using the passed configuration's iterator). Shallow cloning is used in the inheritance internals, but deep cloning can be provided
+(with a custom configuration) as well.
+
 
 ### Introspection
 
@@ -284,9 +288,9 @@ the loss) the current applied talent, only if such object is actually an object 
 functions for talents are:
 
 ```lua
-talents.requires  (talent1, selector1)  --> boolean
-talents.provides  (talent2, selector2)  --> boolean
-talents.conflicts (talent3, selector3)  --> boolean
+talents.requires  (talent1, selector1) --> boolean
+talents.provides  (talent2, selector2) --> boolean
+talents.conflicts (talent3, selector3) --> boolean
 ```
 
 While, the talent query over the object (here, called _talent abstraction_) is called as:
