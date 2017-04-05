@@ -40,7 +40,7 @@ of all, to compose seamlessly on an unknown object, the library must yield a fre
 some assumptions over this unknown object (I mean, assumptions intended to _modify_ the passed object). So,
 to avoid inconsistent assumptions, fresh things are generated and they should replace explicitly their respective target
 objects (surely, where it is planned to do that). By second, these fresh objects must behave almost like their target
-objects counterparts, with minor and needed variations, if possible. In this library, a fresh object have its own identity,
+objects counterparts, with minor and needed variations, if possible. In this library, a fresh object has its own identity,
 and its own "state", but, for example, the target object's meta-table semantics are preserved in some way (with the
 exception of the `__newindex` meta-method, which is used to provide a "local state" for this fresh object).
 
@@ -188,6 +188,16 @@ But a syntax sugar is provided as well:
 ```lua
 local talent3 = talent1 + talent2
 ```
+
+During talent application and talent activation, detected conflicts are raised under the standard below:
+
+```lua
+local reason = require ('talents.internals.reason').conflict (selector)
+
+error (reason)
+```
+
+Where `selector` is the field which the system have detected an arising conflict.
 
 
 ### Contextual Activation
