@@ -1,16 +1,28 @@
-language: erlang
+anguage: c
+
+sudo: false
 
 env:
-  - LUA=""
-  - LUA="luajit"
+  global:
+    - LUAROCKS_VERSION="2.4.1"
+    - ROCK_NAME="talents"
+    - ROCK_VERSION="0.1-1"
+  matrix:
+    - LUA_VERSION="5.2.4" LUA_BIN="lua"
+    - LUA_VERSION="5.2.1" LUA_BIN="lua"
+    - LUA_VERSION="5.3.1" LUA_BIN="lua"
+    - LUA_VERSION="5.3.4" LUA_BIN="lua"
+    - LUA_VERSION="5.1.4" LUA_BIN="lua"
+    - LUA_VERSION="5.1.1" LUA_BIN="lua"
 
-install:
-  - sudo apt-get install luajit
-  - sudo apt-get install luarocks
-  - sudo luarocks install LuaFileSystem
-  - sudo luarocks install busted
+before_install: source .travis-ci/setup.sh
+install:        source .travis-ci/install.sh
+script:         source .travis-ci/test.sh
+after_success:  source .travis-ci/report.sh
 
-script: "busted"
+cache:
+  directories:
+    - "$HOME/.travis-ci-lua"
 
 branches:
   except:
