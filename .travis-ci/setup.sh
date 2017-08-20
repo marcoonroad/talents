@@ -22,7 +22,7 @@ else
             tar zxf lua-$LUA_VERSION.tar.gz
             cd lua-$LUA_VERSION
             make linux test
-            make install INSTALL_TOP=$TRAVIS_CACHE_DIRECTORY/lua-$LUA_VERSION/install # make local
+            make install INSTALL_TOP=$HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install # make local
             cd ..
             echo "*** Lua is built!"
             echo "==========================================================="
