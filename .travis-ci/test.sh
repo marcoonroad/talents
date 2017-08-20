@@ -3,7 +3,7 @@
 echo ""
 echo "===> Checking rockspec..."
 luarocks lint "$ROCK_NAME-$ROCK_VERSION.rockspec"
-echo "==> Good job! Rockspec is OK."
+echo "===> Good job! Rockspec is OK."
 echo ""
 
 #####################################################################
