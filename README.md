@@ -2,6 +2,7 @@
 Pluggable contextual talents implementation for Lua.
 
 [![Build Status](https://travis-ci.org/marcoonroad/talents.svg?branch=master)](https://travis-ci.org/marcoonroad/talents)
+[![Coverage Status](https://coveralls.io/repos/github/marcoonroad/talents/badge.svg?branch=master)](https://coveralls.io/github/marcoonroad/talents?branch=master)
 
 This library provides talents, a kind of traits/mixins/roles applied on object-level. However, the set of operators
 known in these four features is somehow _very restricted_ in this library. To be honest, this library only
