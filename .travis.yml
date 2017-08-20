@@ -6,7 +6,7 @@ env:
   global:
     - LUAROCKS_VERSION="2.4.1"
     - ROCK_NAME="talents"
-    - ROCK_VERSION="0.1-1"
+    - ROCK_VERSION="0.1-2"
   matrix:
     - LUA_VERSION="5.2.4" LUA_BIN="lua"
     - LUA_VERSION="5.2.1" LUA_BIN="lua"
