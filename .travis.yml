@@ -1,4 +1,4 @@
-anguage: c
+language: c
 
 sudo: false
 
@@ -16,9 +16,12 @@ env:
     - LUA_VERSION="5.1.1" LUA_BIN="lua"
 
 before_install: source .travis-ci/setup.sh
-install:        source .travis-ci/install.sh
-script:         source .travis-ci/test.sh
-after_success:  source .travis-ci/report.sh
+
+install: source .travis-ci/install.sh
+
+script: source .travis-ci/test.sh
+
+after_success: source .travis-ci/report.sh
 
 cache:
   directories:
