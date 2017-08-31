@@ -23,6 +23,7 @@ then
     echo "==============================================================="
     echo ""
 else
+    echo "===> Cleanup of cache directory..."
     rm -Rf $HOME/.travis-ci-lua/lua$LUA_SUFFIX-$LUA_VERSION || :
 
     mkdir -p $HOME/.travis-ci-lua
@@ -35,11 +36,18 @@ else
             echo ""
             echo "==========================================================="
             echo "*** Building lua..."
+            echo "===> Downloading from lua.org..."
             curl -R -O http://www.lua.org/ftp/lua-$LUA_VERSION.tar.gz
+
+            echo "===> Unpacking zipped file..."
             tar zxf lua-$LUA_VERSION.tar.gz
             cd lua-$LUA_VERSION
+
+            echo "===> Building lua..."
             make linux test
             # make install INSTALL_TOP=$HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install # make local
+
+            echo "===> Installing lua..."
             make install INSTALL_TOP=`pwd`/install
             export LUA_INCLUDE_DIR=`pwd`/install/include
             cd ..
@@ -50,12 +58,19 @@ else
         "jit")
             echo "============================================================"
             echo "*** Building LuaJIT..."
+            echo "===> Downloading luajit..."
             wget http://luajit.org/download/LuaJIT-$LUA_VERSION.tar.gz
+
+            echo "===> Unpacking zipped file..."
             tar zxf LuaJIT-$LUA_VERSION.tar.gz
             mv LuaJIT-$LUA_VERSION luajit-$LUA_VERSION
             cd luajit-$LUA_VERSION
             mkdir -p install
+
+            echo "===> Building luajit..."
             make
+
+            echo "===> Installing luajit..."
             make install PREFIX=`pwd`/install
             ln -sfv `pwd`/install/bin/luajit-$LUA_VERSION `pwd`/install/bin/luajit
             chmod +x `pwd`/install/bin/luajit
@@ -112,12 +127,16 @@ else
     echo ""
     echo "====================================================================="
     echo "*** Building luarocks..."
+    echo "===> Downloading luarocks..."
     wget https://www.luarocks.org/releases/luarocks-$LUAROCKS_VERSION.tar.gz
+
+    echo "===> Unpacking zipped file..."
     tar zxpf luarocks-$LUAROCKS_VERSION.tar.gz
     cd luarocks-$LUAROCKS_VERSION
 
     case $LUA_SUFFIX in
         "")
+            echo "===> Configuring luarocks for Lua..."
             ./configure                                                   \
                 --with-lua=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install \
                 --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install   \
@@ -127,6 +146,7 @@ else
         "jit")
             case $LUA_VERSION in
                 "2.0.*")
+                    echo "===> Configuring luarocks for LuaJIT 2.0.X..."
                     ./configure                                                   \
                         --with-lua=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install \
                         --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install   \
@@ -135,6 +155,7 @@ else
                         --force-config;;
 
                 "2.1.*")
+                    echo "===> Configuring luarocks for LuaJIT 2.1.X..."
                     ./configure                                                   \
                         --with-lua=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install \
                         --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install   \
@@ -145,7 +166,10 @@ else
             esac;;
     esac
 
+    echo "===> Building luarocks..."
     make build
+
+    echo "===> Installing luarocks..."
     make install
     cd ..
     echo "*** Luarocks is built!"
