@@ -8,14 +8,14 @@ env:
     - ROCK_NAME="talents"
     - ROCK_VERSION="0.1-2"
   matrix:
-    - LUA_VERSION="5.2.4"       LUA_BIN="lua"
-    - LUA_VERSION="5.2.1"       LUA_BIN="lua"
-    - LUA_VERSION="5.3.1"       LUA_BIN="lua"
-    - LUA_VERSION="5.3.4"       LUA_BIN="lua"
-    - LUA_VERSION="5.1.4"       LUA_BIN="lua"
-    - LUA_VERSION="5.1.1"       LUA_BIN="lua"
-    - LUA_VERSION="2.0.5"       LUA_BIN="luajit"
-    - LUA_VERSION="2.1.0-beta3" LUA_BIN="luajit"
+    - LUA_VERSION="5.2.4"       LUA_BIN="lua"    REBUILD=1
+    - LUA_VERSION="5.2.1"       LUA_BIN="lua"    REBUILD=1
+    - LUA_VERSION="5.3.1"       LUA_BIN="lua"    REBUILD=1
+    - LUA_VERSION="5.3.4"       LUA_BIN="lua"    REBUILD=1
+    - LUA_VERSION="5.1.4"       LUA_BIN="lua"    REBUILD=1
+    - LUA_VERSION="5.1.1"       LUA_BIN="lua"    REBUILD=1
+    - LUA_VERSION="2.0.5"       LUA_BIN="luajit" REBUILD=1
+    - LUA_VERSION="2.1.0-beta3" LUA_BIN="luajit" REBUILD=1
 
 before_install: source .travis-ci/setup.sh
 

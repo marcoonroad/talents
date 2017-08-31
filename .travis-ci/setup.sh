@@ -1,6 +1,6 @@
 # Travis-CI custom script
 
-if [ -d $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install ]
+if [[ ( -d $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install ) && ( $REBUILD != "1" ) ]]
 then
     echo ""
     echo "==========================================================="
