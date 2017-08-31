@@ -31,6 +31,8 @@ else
     CURRENT_DIRECTORY=`pwd`
     cd $HOME/.travis-ci-lua/lua$LUA_SUFFIX-$LUA_VERSION
 
+    export LUA_RELEASE=`echo $LUA_VERSION | sed 's/^\(...\).*/\1/'`
+
     case $LUA_SUFFIX in
         "")
             echo ""
@@ -144,28 +146,14 @@ else
                 --force-config;;
 
         "jit")
-            echo "===> Configuration for LuaJIT environment..."
+            echo "===> Configuring luarocks for LuaJIT..."
 
-            case $LUA_VERSION in
-                "2.0.*")
-                    echo "===> Configuring luarocks for LuaJIT 2.0.X..."
-                    ./configure                                                   \
-                        --with-lua=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install \
-                        --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install   \
-                        --with-lua-include="$ROOT_DIRECTORY/include/luajit-2.0"   \
-                        --lua-suffix=jit                                          \
-                        --force-config;;
-                "2.1.*")
-                    echo "===> Configuring luarocks for LuaJIT 2.1.X..."
-                    ./configure                                                   \
-                        --with-lua=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install \
-                        --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install   \
-                        --with-lua-include="$ROOT_DIRECTORY/include/luajit-2.1"   \
-                        --lua-suffix=jit                                          \
-                        --force-config;;
-            esac
-
-            echo "===> Luarocks was configured successfully for LuaJIT.";;
+            ./configure                                                          \
+                --with-lua=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install        \
+                --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install          \
+                --with-lua-include="$ROOT_DIRECTORY/include/luajit-$LUA_RELEASE" \
+                --lua-suffix=jit                                                 \
+                --force-config;;
     esac
 
     echo "===> Building luarocks..."
