@@ -23,6 +23,8 @@ then
     echo "==============================================================="
     echo ""
 else
+    rm -Rf $HOME/.travis-ci-lua/lua$LUA_SUFFIX-$LUA_VERSION || :
+
     mkdir -p $HOME/.travis-ci-lua
     mkdir -p $HOME/.travis-ci-lua/lua$LUA_SUFFIX-$LUA_VERSION
     CURRENT_DIRECTORY=`pwd`
@@ -60,13 +62,6 @@ else
             ### THIS IS POSSIBLY THE SOURCE OF ERROR FROM THE LUAROCKS BUILD FAILURE
             # ln -sfv install/bin/luajit-$LUA_VERSION install/bin/lua 
 
-            case $LUA_VERSION in
-                "2.0.*")
-                    export LUA_INCLUDE_DIR=`pwd`/install/include/luajit-2.0;;
-                "2.1.*")
-                    export LUA_INCLUDE_DIR=`pwd`/install/include/luajit-2.1;;
-            esac
-
             cd ..
             # ln -sfv -T `pwd`/LuaJIT-$LUA_VERSION `pwd`/luajit-$LUA_VERSION
             echo "*** LuaJIT is built!"
@@ -83,15 +78,16 @@ else
     ###########################################################################
 
     export CACHE_DIR=`pwd`
+    export BUILD_DIRECTORY="$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION"
+    export ROOT_DIRECTORY="$BUILD_DIRECTORY/install"
     echo ""
     echo "==========================================================="
     echo "*** Linking directories..."
-    ln -sfv -t $CACHE_DIR $CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install/bin     \
-                          $CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install/lib     \
-                          $CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install/include \
-                          $CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install/share   \
-                          $CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install/man
-    cd $CURRENT_DIRECTORY
+    ln -sfv -t $CACHE_DIR $ROOT_DIRECTORY/bin     \
+                          $ROOT_DIRECTORY/lib     \
+                          $ROOT_DIRECTORY/include \
+                          $ROOT_DIRECTORY/share   \
+                          $ROOT_DIRECTORY/man
     echo "*** Linked directories!"
     echo "==========================================================="
     echo ""
@@ -129,12 +125,24 @@ else
                 --force-config;;
 
         "jit")
-            ./configure                                                   \
-                --with-lua=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install \
-                --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install   \
-                --with-lua-include=$LUA_INCLUDE_DIR                       \
-                --lua-suffix=jit                                          \
-                --force-config;;
+            case $LUA_VERSION in
+                "2.0.*")
+                    ./configure                                                   \
+                        --with-lua=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install \
+                        --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install   \
+                        --with-lua-include="$ROOT_DIRECTORY/include/luajit-2.0"   \
+                        --lua-suffix=jit                                          \
+                        --force-config;;
+
+                "2.1.*")
+                    ./configure                                                   \
+                        --with-lua=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install \
+                        --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install   \
+                        --with-lua-include="$ROOT_DIRECTORY/include/luajit-2.1"   \
+                        --lua-suffix=jit                                          \
+                        --force-config;;
+
+            esac;;
     esac
 
     make build
@@ -143,6 +151,8 @@ else
     echo "*** Luarocks is built!"
     echo "====================================================================="
     echo ""
+
+    cd $CURRENT_DIRECTORY
 fi
 
 # END
