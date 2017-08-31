@@ -32,15 +32,15 @@ else
         "luajit")
             echo "============================================================"
             echo "*** Building LuaJIT..."
-            curl -R -O http://luajit.org/download/LuaJIT-$LUA_VERSION.tar.gz
+            wget http://luajit.org/download/LuaJIT-$LUA_VERSION.tar.gz
             tar zxf LuaJIT-$LUA_VERSION.tar.gz
             cd LuaJIT-$LUA_VERSION
             mkdir -p install
             make
             make install PREFIX=`pwd`/install
-            ln -s ./install/bin/luajit-$LUA_VERSION ./install/bin/lua
+            ln -sv install/bin/luajit-$LUA_VERSION install/bin/lua
             cd ..
-            ln -s LuaJIT-$LUA_VERSION luajit-$LUA_VERSION
+            ln -sv LuaJIT-$LUA_VERSION luajit-$LUA_VERSION
             echo "*** LuaJIT is built!"
             echo "============================================================"
             echo "";;
@@ -74,11 +74,11 @@ else
     echo ""
     echo "==========================================================="
     echo "*** Linking directories..."
-    ln -s $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install/bin     $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/bin
-    ln -s $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install/lib     $HOME/.travis-ci-lia/$LUA_BIN-$LUA_VERSION/lib
-    ln -s $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install/include $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/include
-    ln -s $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install/share   $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/share
-    ln -s $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install/man     $HOME/.travis-ci-lua/$LUA_BIN-$LuA_VERSION/man
+    ln -sv $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install/bin     $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/bin
+    ln -sv $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install/lib     $HOME/.travis-ci-lia/$LUA_BIN-$LUA_VERSION/lib
+    ln -sv $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install/include $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/include
+    ln -sv $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install/share   $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/share
+    ln -sv $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install/man     $HOME/.travis-ci-lua/$LUA_BIN-$LuA_VERSION/man
     cd $CURRENT_DIRECTORY
     echo "*** Linked directories!"
     echo "==========================================================="
