@@ -144,6 +144,8 @@ else
                 --force-config;;
 
         "jit")
+            echo "===> Configuration for LuaJIT environment..."
+
             case $LUA_VERSION in
                 "2.0.*")
                     echo "===> Configuring luarocks for LuaJIT 2.0.X..."
@@ -153,7 +155,6 @@ else
                         --with-lua-include="$ROOT_DIRECTORY/include/luajit-2.0"   \
                         --lua-suffix=jit                                          \
                         --force-config;;
-
                 "2.1.*")
                     echo "===> Configuring luarocks for LuaJIT 2.1.X..."
                     ./configure                                                   \
@@ -162,8 +163,9 @@ else
                         --with-lua-include="$ROOT_DIRECTORY/include/luajit-2.1"   \
                         --lua-suffix=jit                                          \
                         --force-config;;
+            esac
 
-            esac;;
+            echo "===> Luarocks was configured successfully for LuaJIT.";;
     esac
 
     echo "===> Building luarocks..."
