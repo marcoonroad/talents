@@ -110,11 +110,24 @@ else
     wget https://www.luarocks.org/releases/luarocks-$LUAROCKS_VERSION.tar.gz
     tar zxpf luarocks-$LUAROCKS_VERSION.tar.gz
     cd luarocks-$LUAROCKS_VERSION
-    ./configure \
-      --with-lua=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install \
-      --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install   \
-      --with-lua-include=$LUA_INCLUDE_DIR                       \
-      --force-config
+
+    case $LUA_SUFFIX in
+        "")
+            ./configure                                                   \
+                --with-lua=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install \
+                --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install   \
+                --with-lua-include=$LUA_INCLUDE_DIR                       \
+                --force-config;;
+
+        "jit")
+            ./configure                                                   \
+                --with-lua=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install \
+                --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install   \
+                --with-lua-include=$LUA_INCLUDE_DIR                       \
+                --lua-suffix=jit                                          \
+                --force-config;;
+    esac
+
     make build
     make install
     cd ..
