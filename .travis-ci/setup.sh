@@ -41,6 +41,7 @@ else
             make
             make install PREFIX=`pwd`/install
             ln -sfv install/bin/luajit-$LUA_VERSION install/bin/luajit
+            ln -sfv install/bin/luajit-$LUA_VERSION install/bin/lua
             export LUA_INCLUDE_DIR=`pwd`/install/include/luajit-2.0
             cd ..
             # ln -sfv -T `pwd`/LuaJIT-$LUA_VERSION `pwd`/luajit-$LUA_VERSION
@@ -64,10 +65,12 @@ else
     wget https://www.luarocks.org/releases/luarocks-$LUAROCKS_VERSION.tar.gz
     tar zxpf luarocks-$LUAROCKS_VERSION.tar.gz
     cd luarocks-$LUAROCKS_VERSION
-    ./configure --with-lua=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install \
-                  --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install \
-              --lua-suffix=$LUA_SUFFIX                                    \
-        --with-lua-include=$LUA_INCLUDE_DIR
+    ./configure \
+      --with-lua-bin=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install/bin/lua$LUA_SUFFIX \
+      --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install                          \
+      --lua-suffix="$LUA_SUFFIX"                                                       \
+      --with-lua-include=$LUA_INCLUDE_DIR \
+      --force-config
     make build
     make install
     cd ..
