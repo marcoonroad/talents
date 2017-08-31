@@ -59,7 +59,14 @@ else
             chmod +x `pwd`/install/bin/luajit
             ### THIS IS POSSIBLY THE SOURCE OF ERROR FROM THE LUAROCKS BUILD FAILURE
             # ln -sfv install/bin/luajit-$LUA_VERSION install/bin/lua 
-            export LUA_INCLUDE_DIR=`pwd`/install/include/luajit-2.0
+
+            case $LUA_VERSION in
+                "2.0.*")
+                    export LUA_INCLUDE_DIR=`pwd`/install/include/luajit-2.0;;
+                "2.1.*")
+                    export LUA_INCLUDE_DIR=`pwd`/install/include/luajit-2.1;;
+            esac
+
             cd ..
             # ln -sfv -T `pwd`/LuaJIT-$LUA_VERSION `pwd`/luajit-$LUA_VERSION
             echo "*** LuaJIT is built!"
