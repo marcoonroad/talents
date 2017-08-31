@@ -68,7 +68,7 @@ else
     ./configure \
       --with-lua-bin=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install/bin \
       --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install           \
-#     --lua-suffix="$LUA_SUFFIX"                                        \
+      --lua-suffix="$LUA_SUFFIX"                                        \
       --with-lua-include=$LUA_INCLUDE_DIR \
       --force-config
     make build
