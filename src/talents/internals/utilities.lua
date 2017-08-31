@@ -7,7 +7,7 @@ local string     = require "string"
 local export     = { }
 
 function export.eval (program, environment, ...)
-    local major, minor = string.match (_VERSION, "(%d).(%d)")
+    local major, minor = string.match (_VERSION, "Lua (%d).(%d)")
 
     assert (major == "5", "Only works on some Lua 5.* versions!")
 

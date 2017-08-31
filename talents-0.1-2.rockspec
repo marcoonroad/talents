@@ -8,7 +8,7 @@ version = "0.1-2"
 
 source = {
     url = "git://github.com/marcoonroad/talents",
-    tag = "v0.1-2",
+--  tag = "v0.1-2",
 }
 
 description = {
@@ -26,17 +26,20 @@ build = {
     type = "builtin",
 
     modules = {
-        [ "talents" ]                               = "src/talents/init.lua",
-        [ "talents.pluggable" ]                     = "src/talents/pluggable.lua",
-        [ "talents.internals.selective" ]           = "src/talents/internals/selective.lua",
-        [ "talents.internals.reason" ]              = "src/talents/internals/reason.lua",
-        [ "talents.internals.reason.application" ]  = "src/talents/internals/reason/application.lua",
-        [ "talents.internals.reason.ownership" ]    = "src/talents/internals/reason/ownership.lua",
-        [ "talents.internals.reason.transference" ] = "src/talents/internals/reason/transference.lua",
-        [ "talents.internals.token" ]               = "src/talents/internals/token.lua",
-        [ "talents.internals.weak" ]                = "src/talents/internals/weak.lua",
-        [ "talents.internals.default" ]             = "src/talents/internals/default.lua",
-        [ "talents.internals.utilities" ]           = "src/talents/internals/utilities.lua",
-        [ "talents.example" ]                       = "src/talents/example.lua",
+        [ "talents" ]                                = "src/talents/init.lua",
+        [ "talents.pluggable" ]                      = "src/talents/pluggable.lua",
+        [ "talents.internals.selective" ]            = "src/talents/internals/selective.lua",
+        [ "talents.internals.reason" ]               = "src/talents/internals/reason.lua",
+        [ "talents.internals.reason.application" ]   = "src/talents/internals/reason/application.lua",
+        [ "talents.internals.reason.ownership" ]     = "src/talents/internals/reason/ownership.lua",
+        [ "talents.internals.reason.transference" ]  = "src/talents/internals/reason/transference.lua",
+        [ "talents.internals.token" ]                = "src/talents/internals/token.lua",
+        [ "talents.internals.weak" ]                 = "src/talents/internals/weak.lua",
+        [ "talents.internals.default" ]              = "src/talents/internals/default.lua",
+        [ "talents.internals.utilities" ]            = "src/talents/internals/utilities.lua",
+        [ "talents.internals.memory" ]               = "src/talents/internals/memory.lua",
+        [ "talents.internals.metatable.metaobject" ] = "src/talents/internals/metatable/metaobject.lua",
+        [ "talents.internals.metatable.metatalent" ] = "src/talents/internals/metatable/metatalent.lua",
+        [ "talents.example" ]                        = "src/talents/example.lua",
     },
 }

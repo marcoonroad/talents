@@ -1,23 +1,32 @@
 local assert       = assert
 local coroutine    = coroutine
-local debug        = debug
+-- local debug        = debug
 local error        = error
-local ipairs       = ipairs
---local load         = load
+-- local ipairs       = ipairs
+-- local load         = load
 local require      = require
-local pairs        = pairs
+-- local pairs        = pairs
 local pcall        = pcall
---local setfenv      = setfenv
+-- local setfenv      = setfenv
 local setmetatable = setmetatable
-local tostring     = tostring
---local _VERSION     = _VERSION
+-- local tostring     = tostring
+-- local _VERSION     = _VERSION
 
 local reason    = require 'talents.internals.reason'
 local weak      = require 'talents.internals.weak'
 local default   = require 'talents.internals.default'
-local utilities = require 'talents.internals.utilities'
-local eval      = utilities.eval
-local binary    = utilities.binary
+-- local utilities = require 'talents.internals.utilities'
+local memory    = require 'talents.internals.memory'
+
+local bindings   = memory.bindings
+local reflected  = memory.reflected
+local decorator  = memory.decorator
+local decorated  = memory.decorated
+local delegated  = memory.delegated
+local subjective = memory.subjective
+local objective  = memory.objective
+local injected   = memory.injected
+local ownership  = memory.ownership
 
 local function functor (external)
     local identity = external.identity or default.identity
@@ -26,7 +35,6 @@ local function functor (external)
     local inspect  = external.inspect  or default.inspect
 
     local export     = { }
-    local metatalent = { }
     local selective  = require 'talents.internals.selective' ( )
     local token      = require 'talents.internals.token' { }
     local talentID
@@ -35,132 +43,19 @@ local function functor (external)
     local conflict  = token.generate ( )
     local exclusive = token.generate ( )
 
-    local bindings   = weak.key ( )
-    local reflected  = weak.key ( )
-    local decorator  = weak.key ( )
-    local decorated  = weak.key ( )
-    local delegated  = weak.key ( )
-    local subjective = weak.key ( )
-    local objective  = weak.key ( )
-    local injected   = weak.key ( )
-    local ownership  = weak.key ( )
-
-    local metaobject = { }
-
-    metaobject.__metatable = "[proxy object's metaobject]"
-
-    function metaobject: __index (selector)
-        local index   = 2
-        local caller  = debug.getinfo (index)
-
-        while caller do
-            if caller and caller.func and
-                injected[ identity (caller.func) ] and
-                injected[ identity (caller.func) ][ identity (self) ] and
-                not decorator[ identity (self) ][ identity (selector) ]
-            then
-                error (reason.application.violation (selector))
-
-            else
-                index  = index + 1
-                caller = debug.getinfo (index)
-            end
-        end
-
-        local value = delegated[ identity (self) ][ identity (selector) ]
-
-        if equality (value, nil) and decorator[ identity (self) ] then
-            value = decorator[ identity (self) ][ identity (selector) ]
-        end
-
-        if (equality (value, nil) or equality (value, required)
-            or equality (value, exclusive)) and decorated[ identity (self) ]
-        then
-            value = decorated[ identity (self) ][ identity (selector) ]
-        end
-
-        return value
-    end
-
-    function metaobject: __newindex (selector, value)
-        local owner   = ownership[ identity (self) ]
-        local current = coroutine.running ( )
-
-        if equality (owner, current) then
-			local previous = decorator[ identity (self) ][ identity (selector) ]
-
-			if equality (previous, exclusive) then
-				decorated[ identity (self) ][ identity (selector) ] = value
-
-			else
-				delegated[ identity (self) ][ identity (selector) ] = value
-            end
-
-        else
-            error (reason.ownership.violation (selector, value))
-        end
-    end
-
-    local function method (template)
-        return function (self, ...)
-            local program = ("return (function %s end) (...) "):
-                format (template)
-
-            return eval (program, {
-                self       = self,
-                decorated  = decorated,
-                tostring   = tostring,
-                pairs      = pairs,
-                ipairs     = ipairs,
-            }, ...)
-        end
-    end
-
-    local methods = {
-        __call     = "(...) return decorated[ self ] (...)",
-        __tostring = "( )   return tostring (decorated[ self ])",
-        __pairs    = "( )   return pairs (decorated[ self ])",
-        __ipairs   = "( )   return ipairs (decorated[ self ])",
-        __len      = "( )   return #(decorated[ self ])",
-        __unm      = "( )   return -(decorated[ self ])",
-        __bnot     = "( )   return ~(decorated[ self ])",
-
-        __eq     = binary "==", __lt   = binary "<", __le  = binary "<=",
-        __concat = binary "..", __add  = binary "+", __sub = binary "-",
-        __idiv   = binary "//", __div  = binary "/", __mod = binary "%",
-        __pow    = binary "^",  __mul  = binary "*",
-        __shl    = binary "<<", __band = binary "&", __bor = binary "|",
-        __shr    = binary ">>", __bxor = binary "~",
+    local metaobject = require 'talents.internals.metatable.metaobject' {
+        identity  = identity,
+        iterator  = iterator,
+        equality  = equality,
+        inspect   = inspect,
+        required  = required,
+        exclusive = exclusive,
+        conflict  = conflict,
     }
 
-    for event, template in pairs (methods) do
-        metaobject[ event ] = method (template)
-    end
+    local metatalent = require 'talents.internals.metatable.metatalent' (export)
 
-    function metatalent.__tostring (_)
-        return "[talent abstraction]"
-    end
-
-    function metatalent: __call (structure, scope, ...)
-        if scope then
-            return export.activate (self, structure, scope, ...)
-
-        else
-            return export.decorate (self, structure)
-        end
-    end
-
-    function metatalent: __shr (structure)
-        return export.extend (self, structure)
-    end
-
-    function metatalent: __add (talent)
-        return export.compose (self, talent)
-    end
-
-    metatalent.__bor = metatalent.__add
-
-    -- public definitions  --
+     -- public definitions  --
     function export.required ( )
         return required
     end
@@ -214,16 +109,19 @@ local function functor (external)
 
         for selector, value in iterator (bindings[ identity (talent) ]) do
             if equality (value, conflict) then
+                -- there is a unsolved conflict --
                 error (reason.application.conflict (selector))
 
             elseif equality (value, required) and
                 equality (object[ identity (selector) ], nil)
             then
+                -- implemented selector is not implemented --
                 error (reason.application.required (selector))
 
 			elseif equality (value, exclusive) and
                 equality (object[ identity (selector) ], nil)
             then
+                -- exclusive selector is not provided --
 				error (reason.application.exclusive (selector))
 
             else
@@ -242,7 +140,7 @@ local function functor (external)
         decorator[ self ] = bindings[ identity (talent) ]
         decorated[ self ] = object
         delegated[ self ] = { }
-        ownership[ self ] = coroutine.running ( )
+        ownership[ self ] = coroutine.running ( ) or true
 
         setmetatable (self, metaobject)
 
@@ -317,6 +215,7 @@ local function functor (external)
         elseif objective[ identity (object) ] then
             return export.abstract (objective[ identity (object) ])
 
+        -- talent was collected/released --
         else
             return nil
         end
@@ -361,8 +260,8 @@ local function functor (external)
 
 	function export.transfer (owned, thread)
 		local class = type (thread)
-		assert (class == 'thread', reason.transference.invalid ('thread',
-            class))
+		assert (class == 'thread' or class == 'nil',
+            reason.transference.invalid ('thread or nil', class))
 
 		local status = coroutine.status (thread)
 		assert (status == 'suspended' or
@@ -370,7 +269,7 @@ local function functor (external)
 		        reason.transference.coroutine (status))
 
 		local owner   = ownership[ identity (owned) ]
-		local current = coroutine.running ( )
+		local current = coroutine.running ( ) or true
 
 		if equality (owner, current) then
 		    ownership[ identity (owned) ] = thread

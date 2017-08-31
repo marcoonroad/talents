@@ -13,12 +13,15 @@ local function functor (talents)
             self.y = self.y + y
         end,
 
-        clear = function (self)
+        clear = function (_)
+            --[[
             self.x = 0
             self.y = 0
+            ]]--
         end,
     }
 
+    --[[
     export.talents.point3D = talents.extend (export.talents.point2D, {
         z = talents.required ( ),
 
@@ -34,6 +37,7 @@ local function functor (talents)
             self.z = 0
         end,
     })
+    ]]--
 
     export.talents.labeled = talents.talent {
         label = talents.required ( ),
@@ -56,15 +60,16 @@ local function functor (talents)
     export.talents.observable = talents.talent {
         observers = talents.required ( ),
 
-        register = function (self, observer)
-            self.observers[ observer ] = true
+        register = function (_)
+            -- self.observers[ observer ] = true
         end,
 
-        unregister = function (self, observer)
-            self.observers[ observer ] = nil
+        unregister = function (_)
+            -- self.observers[ observer ] = nil
         end,
 
-        notify = function (self, event)
+        notify = function (_)
+            --[[
             collectgarbage ('stop')
 
             for observer in pairs (self.observers) do
@@ -72,6 +77,7 @@ local function functor (talents)
             end
 
             collectgarbage ('restart')
+            ]]--
         end,
     }
 

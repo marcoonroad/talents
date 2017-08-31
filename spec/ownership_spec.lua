@@ -67,7 +67,7 @@ describe ("talent ownership,", function ( )
 
         assert.error (function ( )
             talents.transfer (point, "Hello, World!")
-        end, reason.transference.invalid ('thread', 'string'))
+        end, reason.transference.invalid ('thread or nil', 'string'))
 
         assert.error (function ( )
             local threadA

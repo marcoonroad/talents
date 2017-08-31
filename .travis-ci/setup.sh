@@ -22,17 +22,27 @@ else
             tar zxf lua-$LUA_VERSION.tar.gz
             cd lua-$LUA_VERSION
             make linux test
-            make install INSTALL_TOP=$HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install # make local
+            # make install INSTALL_TOP=$HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install # make local
+            make install INSTALL_TOP=`pwd`/install
             cd ..
             echo "*** Lua is built!"
             echo "==========================================================="
             echo "";;
 
         "luajit")
-            echo "================================================[ ERROR ]==="
-            echo "*** Support for LuaJIT is not implemented yet!"
             echo "============================================================"
-            exit -1;;
+            echo "*** Building LuaJIT..."
+            wget http://luajit.org/download/LuaJIT-$LUA_VERSION.tar.gz
+            mv LuaJIT-$LUA_VERSION.tar.gz luajit-$LUA_VERSION.tar.gz
+            tar zxf luajit-$LUA_VERSION.tar.gz
+            cd luajit-$LUA_VERSION
+            mkdir -p install
+            make
+            make install PREFIX=`pwd`/install
+            cd ..
+            echo "*** LuaJIT is built!"
+            echo "============================================================"
+            echo "";;
 
         "*")
             echo "================================================[ ERROR ]==="
