@@ -38,6 +38,7 @@ else
             mkdir -p install
             make
             make install PREFIX=`pwd`/install
+            ln -s ./install/bin/luajit-$LUA_VERSION ./install/bin/lua
             cd ..
             ln -s LuaJIT-$LUA_VERSION luajit-$LUA_VERSION
             echo "*** LuaJIT is built!"
