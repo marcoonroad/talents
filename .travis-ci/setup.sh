@@ -1,6 +1,6 @@
 # Travis-CI custom script
 
-if [[ ( -d $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install ) && ( $REBUILD != "1" ) ]]
+if [[ ( -d $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/bin ) && ( $REBUILD != "1" ) ]]
 then
     echo ""
     echo "==========================================================="
@@ -60,8 +60,8 @@ else
     wget https://www.luarocks.org/releases/luarocks-$LUAROCKS_VERSION.tar.gz
     tar zxpf luarocks-$LUAROCKS_VERSION.tar.gz
     cd luarocks-$LUAROCKS_VERSION
-    ./configure --with-lua=$HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install \
-        --prefix=$HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install
+    ./configure --with-lua=`pwd`/$LUA_BIN-$LUA_VERSION/install \
+        --prefix=`pwd`/$LUA_BIN-$LUA_VERSION/install
     make build
     make install
     cd ..
@@ -74,11 +74,11 @@ else
     echo ""
     echo "==========================================================="
     echo "*** Linking directories..."
-    ln -sv $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install/bin     $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/bin
-    ln -sv $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install/lib     $HOME/.travis-ci-lia/$LUA_BIN-$LUA_VERSION/lib
-    ln -sv $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install/include $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/include
-    ln -sv $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install/share   $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/share
-    ln -sv $HOME/.travis-ci-lua/$LUA_BIN-$LUA_VERSION/install/man     $HOME/.travis-ci-lua/$LUA_BIN-$LuA_VERSION/man
+    ln -sv `pwd`/$LUA_BIN-$LUA_VERSION/install/bin     `pwd`/bin
+    ln -sv `pwd`/$LUA_BIN-$LUA_VERSION/install/lib     `pwd`/lib
+    ln -sv `pwd`/$LUA_BIN-$LUA_VERSION/install/include `pwd`/include
+    ln -sv `pwd`/$LUA_BIN-$LUA_VERSION/install/share   `pwd`/share
+    ln -sv `pwd`/$LUA_BIN-$LUA_VERSION/install/man     `pwd`/man
     cd $CURRENT_DIRECTORY
     echo "*** Linked directories!"
     echo "==========================================================="
