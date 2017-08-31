@@ -57,11 +57,12 @@ else
     echo ""
     echo "====================================================================="
     echo "*** Building luarocks..."
+    CACHE_DIR=`pwd`
     wget https://www.luarocks.org/releases/luarocks-$LUAROCKS_VERSION.tar.gz
     tar zxpf luarocks-$LUAROCKS_VERSION.tar.gz
     cd luarocks-$LUAROCKS_VERSION
-    ./configure --with-lua=`pwd`/$LUA_BIN-$LUA_VERSION/install \
-        --prefix=`pwd`/$LUA_BIN-$LUA_VERSION/install
+    ./configure --with-lua=$CACHE_DIR/$LUA_BIN-$LUA_VERSION/install \
+        --prefix=$CACHE_DIR/$LUA_BIN-$LUA_VERSION/install
     make build
     make install
     cd ..
