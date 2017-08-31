@@ -7,6 +7,21 @@ then
     echo "*** Reusing cache directory $HOME/.travis-ci-lua/lua$LUA_SUFFIX-$LUA_VERSION..."
     echo "==========================================================="
     echo ""
+
+    ###########################################################################
+
+    echo ""
+    echo "==============================================================="
+    echo "*** Setting up environment..."
+    PATH=$HOME/.travis-ci-lua/lua$LUA_SUFFIX-$LUA_VERSION/bin:$PATH
+    export PATH
+    LD_LIBRARY_PATH=$HOME/.travis-ci-lua/lua$LUA_SUFFIX-$LUA_VERSION/lib:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH
+    MANPATH=$HOME/.travis-ci-lua/lua$LUA_SUFFIX-$LUA_VERSION/man:$MANPATH
+    export MANPATH
+    echo "*** Configuration is done!"
+    echo "==============================================================="
+    echo ""
 else
     mkdir -p $HOME/.travis-ci-lua
     mkdir -p $HOME/.travis-ci-lua/lua$LUA_SUFFIX-$LUA_VERSION
@@ -59,28 +74,6 @@ else
     ###########################################################################
 
     echo ""
-    echo "====================================================================="
-    echo "*** Building luarocks..."
-    CACHE_DIR=`pwd`
-    wget https://www.luarocks.org/releases/luarocks-$LUAROCKS_VERSION.tar.gz
-    tar zxpf luarocks-$LUAROCKS_VERSION.tar.gz
-    cd luarocks-$LUAROCKS_VERSION
-    ./configure \
-      --with-lua=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install \
-      --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install   \
-      --lua-suffix="$LUA_SUFFIX"                                \
-      --with-lua-include=$LUA_INCLUDE_DIR                       \
-      --force-config
-    make build
-    make install
-    cd ..
-    echo "*** Luarocks is built!"
-    echo "====================================================================="
-    echo ""
-
-    ###########################################################################
-
-    echo ""
     echo "==========================================================="
     echo "*** Linking directories..."
     ln -sfv -t $CACHE_DIR $CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install/bin     \
@@ -92,19 +85,42 @@ else
     echo "*** Linked directories!"
     echo "==========================================================="
     echo ""
-fi
 
-echo ""
-echo "==============================================================="
-echo "*** Setting up environment..."
-PATH=$HOME/.travis-ci-lua/lua$LUA_SUFFIX-$LUA_VERSION/bin:$PATH
-export PATH
-LD_LIBRARY_PATH=$HOME/.travis-ci-lua/lua$LUA_SUFFIX-$LUA_VERSION/lib:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH
-MANPATH=$HOME/.travis-ci-lua/lua$LUA_SUFFIX-$LUA_VERSION/man:$MANPATH
-export MANPATH
-echo "*** Configuration is done!"
-echo "==============================================================="
-echo ""
+    ###########################################################################
+
+    echo ""
+    echo "==============================================================="
+    echo "*** Setting up environment..."
+    PATH=$HOME/.travis-ci-lua/lua$LUA_SUFFIX-$LUA_VERSION/bin:$PATH
+    export PATH
+    LD_LIBRARY_PATH=$HOME/.travis-ci-lua/lua$LUA_SUFFIX-$LUA_VERSION/lib:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH
+    MANPATH=$HOME/.travis-ci-lua/lua$LUA_SUFFIX-$LUA_VERSION/man:$MANPATH
+    export MANPATH
+    echo "*** Configuration is done!"
+    echo "==============================================================="
+    echo ""
+
+    ###########################################################################
+
+    echo ""
+    echo "====================================================================="
+    echo "*** Building luarocks..."
+    CACHE_DIR=`pwd`
+    wget https://www.luarocks.org/releases/luarocks-$LUAROCKS_VERSION.tar.gz
+    tar zxpf luarocks-$LUAROCKS_VERSION.tar.gz
+    cd luarocks-$LUAROCKS_VERSION
+    ./configure \
+      --with-lua=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install \
+      --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install   \
+      --with-lua-include=$LUA_INCLUDE_DIR                       \
+      --force-config
+    make build
+    make install
+    cd ..
+    echo "*** Luarocks is built!"
+    echo "====================================================================="
+    echo ""
+fi
 
 # END
