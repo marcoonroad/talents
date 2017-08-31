@@ -73,6 +73,7 @@ else
 
     ###########################################################################
 
+    export CACHE_DIR=`pwd`
     echo ""
     echo "==========================================================="
     echo "*** Linking directories..."
@@ -106,7 +107,6 @@ else
     echo ""
     echo "====================================================================="
     echo "*** Building luarocks..."
-    CACHE_DIR=`pwd`
     wget https://www.luarocks.org/releases/luarocks-$LUAROCKS_VERSION.tar.gz
     tar zxpf luarocks-$LUAROCKS_VERSION.tar.gz
     cd luarocks-$LUAROCKS_VERSION
