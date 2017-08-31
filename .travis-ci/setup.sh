@@ -66,9 +66,9 @@ else
     tar zxpf luarocks-$LUAROCKS_VERSION.tar.gz
     cd luarocks-$LUAROCKS_VERSION
     ./configure \
-      --with-lua-bin=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install/bin/lua$LUA_SUFFIX \
-      --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install                          \
-      --lua-suffix="$LUA_SUFFIX"                                                       \
+      --with-lua-bin=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install/bin \
+      --prefix=$CACHE_DIR/lua$LUA_SUFFIX-$LUA_VERSION/install           \
+#     --lua-suffix="$LUA_SUFFIX"                                        \
       --with-lua-include=$LUA_INCLUDE_DIR \
       --force-config
     make build
