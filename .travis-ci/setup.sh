@@ -32,14 +32,14 @@ else
         "luajit")
             echo "============================================================"
             echo "*** Building LuaJIT..."
-            wget http://luajit.org/download/LuaJIT-$LUA_VERSION.tar.gz
-            mv LuaJIT-$LUA_VERSION.tar.gz luajit-$LUA_VERSION.tar.gz
-            tar zxf luajit-$LUA_VERSION.tar.gz
-            cd luajit-$LUA_VERSION
+            curl -R -O http://luajit.org/download/LuaJIT-$LUA_VERSION.tar.gz
+            tar zxf LuaJIT-$LUA_VERSION.tar.gz
+            cd LuaJIT-$LUA_VERSION
             mkdir -p install
             make
             make install PREFIX=`pwd`/install
             cd ..
+            ln -s LuaJIT-$LUA_VERSION luajit-$LUA_VERSION
             echo "*** LuaJIT is built!"
             echo "============================================================"
             echo "";;
