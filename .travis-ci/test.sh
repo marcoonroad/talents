@@ -19,16 +19,20 @@ echo ""
 echo ""
 echo "===> Running tests..."
 busted --verbose spec
-echo "===> Awesome! Your code pass, let's generate coverage reports now."
-echo ""
 
-#####################################################################
+if [[ $NOCOVERAGE != "1" ]]
+then
+    echo "===> Awesome! Your code pass, let's generate coverage reports now."
+    echo ""
 
-echo ""
-echo "===> Running tests with coverage enabled..."
-busted --verbose --coverage spec
-echo "===> Coverage report was generated without problem. Good work!"
-echo ""
+    #####################################################################
+
+    echo ""
+    echo "===> Running tests with coverage enabled..."
+    busted --verbose --coverage spec
+    echo "===> Coverage report was generated without problem. Good work!"
+    echo ""
+fi
 
 #####################################################################
 

@@ -40,7 +40,7 @@ else
             make install PREFIX=`pwd`/install
             ln -sfv install/bin/luajit-$LUA_VERSION install/bin/lua
             cd ..
-            ln -sfv -T LuaJIT-$LUA_VERSION luajit-$LUA_VERSION
+            ln -sfv -T `pwd`/LuaJIT-$LUA_VERSION `pwd`/luajit-$LUA_VERSION
             echo "*** LuaJIT is built!"
             echo "============================================================"
             echo "";;
