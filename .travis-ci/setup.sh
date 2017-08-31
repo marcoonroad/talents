@@ -38,9 +38,9 @@ else
             mkdir -p install
             make
             make install PREFIX=`pwd`/install
-            ln -sv install/bin/luajit-$LUA_VERSION install/bin/lua
+            ln -sfv install/bin/luajit-$LUA_VERSION install/bin/lua
             cd ..
-            ln -sv LuaJIT-$LUA_VERSION luajit-$LUA_VERSION
+            ln -sfv LuaJIT-$LUA_VERSION luajit-$LUA_VERSION
             echo "*** LuaJIT is built!"
             echo "============================================================"
             echo "";;
@@ -75,11 +75,11 @@ else
     echo ""
     echo "==========================================================="
     echo "*** Linking directories..."
-    ln -sv `pwd`/$LUA_BIN-$LUA_VERSION/install/bin     `pwd`/bin
-    ln -sv `pwd`/$LUA_BIN-$LUA_VERSION/install/lib     `pwd`/lib
-    ln -sv `pwd`/$LUA_BIN-$LUA_VERSION/install/include `pwd`/include
-    ln -sv `pwd`/$LUA_BIN-$LUA_VERSION/install/share   `pwd`/share
-    ln -sv `pwd`/$LUA_BIN-$LUA_VERSION/install/man     `pwd`/man
+    ln -sfv $CACHE_DIR/$LUA_BIN-$LUA_VERSION/install/bin     $CACHE_DIR/bin
+    ln -sfv $CACHE_DIR/$LUA_BIN-$LUA_VERSION/install/lib     $CACHE_DIR/lib
+    ln -sfv $CACHE_DIR/$LUA_BIN-$LUA_VERSION/install/include $CACHE_DIR/include
+    ln -sfv $CACHE_DIR/$LUA_BIN-$LUA_VERSION/install/share   $CACHE_DIR/share
+    ln -sfv $CACHE_DIR/$LUA_BIN-$LUA_VERSION/install/man     $CACHE_DIR/man
     cd $CURRENT_DIRECTORY
     echo "*** Linked directories!"
     echo "==========================================================="
