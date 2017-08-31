@@ -56,7 +56,9 @@ else
             make
             make install PREFIX=`pwd`/install
             ln -sfv install/bin/luajit-$LUA_VERSION install/bin/luajit
-            ln -sfv install/bin/luajit-$LUA_VERSION install/bin/lua
+            chmod +x install/bin/luajit
+            ### THIS IS POSSIBLY THE SOURCE OF ERROR FROM THE LUAROCKS BUILD FAILURE
+            # ln -sfv install/bin/luajit-$LUA_VERSION install/bin/lua 
             export LUA_INCLUDE_DIR=`pwd`/install/include/luajit-2.0
             cd ..
             # ln -sfv -T `pwd`/LuaJIT-$LUA_VERSION `pwd`/luajit-$LUA_VERSION
