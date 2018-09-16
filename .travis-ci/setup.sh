@@ -61,7 +61,7 @@ else
             echo "============================================================"
             echo "*** Building LuaJIT..."
             echo "===> Downloading luajit..."
-            wget http://luajit.org/download/LuaJIT-$LUA_VERSION.tar.gz
+            wget --no-check-certificate http://luajit.org/download/LuaJIT-$LUA_VERSION.tar.gz
 
             echo "===> Unpacking zipped file..."
             tar zxf LuaJIT-$LUA_VERSION.tar.gz
@@ -77,7 +77,7 @@ else
             ln -sfv `pwd`/install/bin/luajit-$LUA_VERSION `pwd`/install/bin/luajit
             chmod +x `pwd`/install/bin/luajit
             ### THIS IS POSSIBLY THE SOURCE OF ERROR FROM THE LUAROCKS BUILD FAILURE
-            # ln -sfv install/bin/luajit-$LUA_VERSION install/bin/lua 
+            # ln -sfv install/bin/luajit-$LUA_VERSION install/bin/lua
 
             cd ..
             # ln -sfv -T `pwd`/LuaJIT-$LUA_VERSION `pwd`/luajit-$LUA_VERSION
@@ -130,7 +130,7 @@ else
     echo "====================================================================="
     echo "*** Building luarocks..."
     echo "===> Downloading luarocks..."
-    wget https://www.luarocks.org/releases/luarocks-$LUAROCKS_VERSION.tar.gz
+    wget --no-check-certificate https://www.luarocks.org/releases/luarocks-$LUAROCKS_VERSION.tar.gz
 
     echo "===> Unpacking zipped file..."
     tar zxpf luarocks-$LUAROCKS_VERSION.tar.gz
