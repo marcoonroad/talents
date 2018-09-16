@@ -1,0 +1,11 @@
+title: talents
+description: "Pluggable contextual talents implementation for Lua."
+theme: jekyll-theme-midnight
+show_downloads: false
+google_analytics: UA-41209773-2
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - CNAME
+  - vendor

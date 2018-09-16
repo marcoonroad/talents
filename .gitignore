@@ -1,10 +1,7 @@
 *~
 *.swp
 *.swo
-*.rock
-.luacheckcache
 TRASH/
-luacov.report.out
-luacov.stats.out
-wiki/
-wiki
+vendor/
+.bundle/
+_site/

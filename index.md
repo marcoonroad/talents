@@ -1,3 +1,6 @@
+---
+---
+
 # talents
 Pluggable contextual talents implementation for Lua.
 
@@ -143,4 +146,3 @@ Where `selector` stands for the unfulfilled requirement.
 ### Useful links
 
 For more information, check out that [wiki](http://github.com/marcoonroad/talents.wiki/) carefully written.
-
