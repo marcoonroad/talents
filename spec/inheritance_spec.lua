@@ -3,7 +3,7 @@ require 'busted.runner' ( )
 local talents = require 'talents'
 -- local example = require 'talents.example' (talents)
 
-describe ("talent inheritance,", function ( )
+describe ("#unit talent inheritance,", function ( )
     local plane = talents.talent {
         x = talents.required ( ),
         y = talents.required ( ),

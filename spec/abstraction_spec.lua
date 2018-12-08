@@ -3,7 +3,7 @@ require "busted.runner" ( )
 local talents = require 'talents'
 local example = require 'talents.example' (talents)
 
-describe ("talent abstraction,", function ( )
+describe ("#unit talent abstraction,", function ( )
     local astolph = {
         name     = "Astolph",
         health   = 120,

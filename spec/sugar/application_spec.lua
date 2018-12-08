@@ -4,7 +4,7 @@ local talents = require 'talents'
 local reason  = require 'talents.internals.reason'
 local example = require 'talents.example' (talents)
 
-describe ("talent application with syntax sugar,", function ( )
+describe ("#unit talent application with syntax sugar,", function ( )
     it ("should decorate given object", function ( )
         local object = example.talents.labeled (example.target.point)
         local label  = object: inspect ( )
