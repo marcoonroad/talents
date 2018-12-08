@@ -1,0 +1,20 @@
+return {
+  _all = {
+    verbose = true
+  },
+  default = {
+    tags = "unit",
+    ROOT = { "spec" },
+    coverage = false
+  },
+  Unit = {
+    tags = "unit",
+    ROOT = { "spec" },
+    coverage = false
+  },
+  Coverage = {
+    tags = "unit",
+    ROOT = { "spec" },
+    coverage = true
+  }
+}

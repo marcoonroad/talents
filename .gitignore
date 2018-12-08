@@ -8,3 +8,6 @@ luacov.report.out
 luacov.stats.out
 wiki/
 wiki
+vendor/
+.bundle/
+_site/
