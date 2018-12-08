@@ -4,6 +4,35 @@ Pluggable contextual talents implementation for Lua.
 [![Build Status](https://travis-ci.org/marcoonroad/talents.svg?branch=master)](https://travis-ci.org/marcoonroad/talents)
 [![Coverage Status](https://coveralls.io/repos/github/marcoonroad/talents/badge.svg?branch=master)](https://coveralls.io/github/marcoonroad/talents?branch=master)
 
+---
+
+```lua
+#!/usr/bin/env lua
+
+local talents = require 'talents'
+
+local dice = talents.talent {
+  sides = talents.required ( ),
+
+  throw = function (self)
+    return math.random (1, self.sides)
+  end,
+}
+
+local d6  = talents.decorate (dice, { sides = 6 })
+local d12 = talents.decorate (dice, { sides = 12 })
+local d20 = talents.decorate (dice, { sides = 20 })
+
+math.randomseed (os.time ( ) * os.clock ( ))
+
+print (d6:  throw ( )) --> pseudo random number between 1 and 6
+print (d12: throw ( )) --> pseudo random number between 1 and 12
+print (d20: throw ( )) --> pseudo random number between 1 and 20
+
+```
+
+---
+
 This library provides talents, a kind of traits/mixins/roles applied on object-level. However, the set of operators
 known in these four features is somehow _very restricted_ in this library. To be honest, this library only
 supports the following operators:
@@ -28,7 +57,7 @@ aliasing and exclusion.
 ---
 
 __NOTE__: If you don't know anything about traits, talents and mixins, it's recommended to take a look
-in the references section into the [wiki](http://github.com/marcoonroad/talents.wiki/).
+in the references section into the [wiki](http://github.com/marcoonroad/talents/wiki/).
 
 ---
 
