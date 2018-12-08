@@ -8,6 +8,8 @@ describe ("#unit talent definition,", function ( )
         local structure = { x = 0, }
         local talent    = talents.talent (structure)
 
+        assert.same (tostring (talent), "[talent abstraction]")
+
         assert.truthy (talents.provides (talent, "x"))
         assert.falsy  (talents.provides (talent, "y"))
         assert.falsy  (talents.requires (talent, "y"))

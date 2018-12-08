@@ -39,7 +39,7 @@ describe ("#unit talent ownership,", function ( )
     end)
 
     it ("should be able to transfer ownership for another thread", function ( )
-        local main    = coroutine.running ( )
+        local main    = coroutine.running ( ) or nil
         local thread  = coroutine.create (function ( )
             local point = talents.decorate (
                 example.talents.point2D,
@@ -54,7 +54,10 @@ describe ("#unit talent ownership,", function ( )
             return talents.transfer (point, main)
         end)
 
-        local _, point = coroutine.resume (thread)
+        local passed, value = coroutine.resume (thread)
+        if not passed then error (value) end
+
+        local point = value
 
         point: move (-5, -7)
 
