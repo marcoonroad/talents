@@ -47,7 +47,7 @@ echo ""
 echo ""
 echo "===> Loading the library..."
 eval `luarocks path`
-lua -l$ROCK_NAME -e "print ('~Library $ROCK_NAME was loaded successfully!~')" || exit 1
+lua$LUA_SUFFIX -l$ROCK_NAME -e "print ('~Library $ROCK_NAME was loaded successfully!~')" || exit 1
 echo "===> Fine. Your installed code is loadable. Let's test again using the installed code."
 echo ""
 
