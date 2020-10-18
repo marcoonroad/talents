@@ -5,7 +5,7 @@ local weak    = require 'talents.internals.weak'
 local reason  = require 'talents.internals.reason'
 local example = require 'talents.example' (talents)
 
-describe ("talent composition with syntax sugar,", function ( )
+describe ("#unit talent composition with syntax sugar,", function ( )
     it ("should merge both talents", function ( )
         local talent = example.talents.observer + example.talents.observable
 

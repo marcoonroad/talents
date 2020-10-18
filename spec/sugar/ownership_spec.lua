@@ -4,7 +4,7 @@ local talents = require 'talents'
 local reason  = require 'talents.internals.reason'
 local example = require 'talents.example' (talents)
 
-describe ("talent ownership with syntax sugar,", function ( )
+describe ("#unit talent ownership with syntax sugar,", function ( )
     it ("should be able to mutate the result object on the owner thread",
     function ( )
         local result = example.talents.point2D (example.target.point2D)

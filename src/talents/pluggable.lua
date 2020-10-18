@@ -263,7 +263,7 @@ local function functor (external)
 		assert (class == 'thread' or class == 'nil',
             reason.transference.invalid ('thread or nil', class))
 
-		local status = coroutine.status (thread)
+		local status = class == 'nil' and 'suspended' or coroutine.status (thread)
 		assert (status == 'suspended' or
 		        status == 'normal',
 		        reason.transference.coroutine (status))
@@ -272,13 +272,13 @@ local function functor (external)
 		local current = coroutine.running ( ) or true
 
 		if equality (owner, current) then
-		    ownership[ identity (owned) ] = thread
+		    ownership[ identity (owned) ] = thread or true
 
 		else
 		    error (reason.transference.current ( ))
 		end
 
-        return owned
+    return owned
 	end
 
     talentID = require 'talents.internals.token' (metatalent)

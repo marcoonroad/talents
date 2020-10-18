@@ -4,7 +4,7 @@ local talents = require 'talents'
 local reason  = require 'talents.internals.reason'
 local example = require 'talents.example' (talents)
 
-describe ("talent contextual activation with syntax sugar,", function ( )
+describe ("#unit talent contextual activation with syntax sugar,", function ( )
     it ("should provide a scoped application", function ( )
         local function scope (self)
             return self: inspect ( )

@@ -2,7 +2,7 @@ require 'busted.runner' ( )
 
 local talents = require 'talents'
 
-describe ("talents releasing", function ( )
+describe ("#unit talents releasing,", function ( )
     it ("should be able to discard garbage collected talents", function ( )
         local emma
 

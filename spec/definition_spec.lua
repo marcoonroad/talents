@@ -2,13 +2,16 @@ require 'busted.runner' ( )
 
 local talents = require 'talents'
 
-describe ("talent definition,", function ( )
+describe ("#unit talent definition,", function ( )
     it ("should not observe any direct effects from passed structure",
     function ( )
         local structure = { x = 0, }
         local talent    = talents.talent (structure)
 
+        assert.same (tostring (talent), "[talent abstraction]")
+
         assert.truthy (talents.provides (talent, "x"))
+        assert.falsy  (talents.provides (talent, "y"))
         assert.falsy  (talents.requires (talent, "y"))
         assert.falsy  (talents.provides (talent, "move"))
 
@@ -16,6 +19,7 @@ describe ("talent definition,", function ( )
 
         assert.truthy (talents.provides (talent, "x"))
         assert.falsy  (talents.requires (talent, "y"))
+        assert.falsy  (talents.provides (talent, "y"))
 
         function structure: move (x, y)
             self.x = self.x + x
@@ -24,12 +28,14 @@ describe ("talent definition,", function ( )
 
         assert.truthy (talents.provides (talent, "x"))
         assert.falsy  (talents.requires (talent, "y"))
+        assert.falsy  (talents.provides (talent, "y"))
         assert.falsy  (talents.provides (talent, "move"))
 
         structure.x = nil
 
         assert.truthy (talents.provides (talent, "x"))
         assert.falsy  (talents.requires (talent, "y"))
+        assert.falsy  (talents.provides (talent, "y"))
         assert.falsy  (talents.provides (talent, "move"))
     end)
 end)
